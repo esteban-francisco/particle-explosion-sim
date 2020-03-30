@@ -1,4 +1,4 @@
-# Particle Fire Explosion Simulator
+# Particle Fire Explosion Simulator (WIP)
 
 A C++ application making use of SDL to create a particle fire explosion effect.
 
