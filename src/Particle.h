@@ -13,16 +13,14 @@ public:
 private:
     double x;
     double y;
-    double xSpeed;
-    double ySpeed;
+    double speed;
+    double direction;
 
 public:
     Particle();
     ~Particle();
     double getX();
     double getY();
-    double getXSpeed();
-    double getYSpeed();
     void update();
 };
 

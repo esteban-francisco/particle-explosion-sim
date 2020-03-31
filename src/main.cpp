@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
             Particle particle = particles[i];
             
             int x = (particle.getX() + 1) * screen.SCREEN_WIDTH/2;
-            int y = (particle.getY() + 1) * screen.SCREEN_HEIGHT/2;
+            int y = (particle.getY() * screen.SCREEN_WIDTH/2) + screen.SCREEN_HEIGHT/2;
         
             screen.setPixel(x, y,red, green, blue);
         }
