@@ -7,19 +7,22 @@ namespace EighteenTwelve {
 
 class Particle {
 public:
+    static const double SPEED_MULTIPLIER;
     static double getRand();
-    double xSpeed;
-    double ySpeed;
 
 private:
     double x;
     double y;
+    double xSpeed;
+    double ySpeed;
 
 public:
     Particle();
     ~Particle();
     double getX();
     double getY();
+    double getXSpeed();
+    double getYSpeed();
     void update();
 };
 
