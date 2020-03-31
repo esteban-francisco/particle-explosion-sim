@@ -3,29 +3,21 @@
 
 namespace EighteenTwelve {
 
-const double Particle::SPEED_MULTIPLIER = 0.01;
+const double Particle::SPEED_MULTIPLIER = 0.0001;
 
 Particle::Particle(): x(0), y(0) {
     this->direction = (2 * M_PI * rand())/RAND_MAX;
-    this->speed = (0.009 * rand())/RAND_MAX;
+    this->speed = (this->SPEED_MULTIPLIER * rand())/RAND_MAX;
 } 
 
 Particle::~Particle() {}
 
-void Particle::update() {
+void Particle::update(int intervalTime) {
     double xSpeed = this->speed * cos(this->direction);
     double ySpeed = this->speed * sin(this->direction);
 
-    this->x += xSpeed;
-    this->y += ySpeed;
-/*
-    // wall "bounce" effect
-	if (this->x <= -1.0 || this->x >= 1.0)
-		this->xSpeed = -this->xSpeed;
-
-	if (this->y <= -1.0 || this->y >= 1.0)
-		this->ySpeed = -this->ySpeed;
-*/
+    this->x += xSpeed * intervalTime;
+    this->y += ySpeed * intervalTime;
 }
 
 double Particle::getX() { return this->x; }

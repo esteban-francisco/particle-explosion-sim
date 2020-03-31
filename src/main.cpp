@@ -23,14 +23,14 @@ int main(int argc, char const *argv[]) {
         // Update particles
 
         // Draw particles
-        Uint32 elapsed = SDL_GetTicks();
+        Uint32 elapsedTime = SDL_GetTicks();
 
         screen.clear();
-        swarm.update();
+        swarm.update(elapsedTime);
         
-        Uint8 red = (1 + sin(elapsed*0.0005)) * 128;
-        Uint8 green = (1 + sin(elapsed*0.0006)) * 128;
-        Uint8 blue = (1 + sin(elapsed*0.0007)) * 128;
+        Uint8 red = (1 + sin(elapsedTime*0.0005)) * 128;
+        Uint8 green = (1 + sin(elapsedTime*0.0006)) * 128;
+        Uint8 blue = (1 + sin(elapsedTime*0.0007)) * 128;
 
         const Particle *const particles = swarm.getParticles();
         for (int i = 0; i < swarm.NUM_PARTICLES; i++) {

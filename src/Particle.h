@@ -21,7 +21,7 @@ public:
     ~Particle();
     double getX();
     double getY();
-    void update();
+    void update(int intervalTime);
 };
 
 } // namespace EighteenTwelve
