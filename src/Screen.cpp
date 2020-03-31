@@ -3,7 +3,7 @@
 namespace EighteenTwelve {
 
 Screen::Screen(): 
-    window(NULL), renderer(NULL), texture(NULL), pixelBuffer(NULL) {}
+    window(NULL), renderer(NULL), texture(NULL), pixelBuffer1(NULL), pixelBuffer2(NULL) {}
 
 Screen::~Screen() {}
 
@@ -39,7 +39,8 @@ bool Screen::init() {
         return false;
     }
 
-    this->pixelBuffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+    this->pixelBuffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+    this->pixelBuffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
     this->clear();
 
     return true;
@@ -55,7 +56,8 @@ bool Screen::processEvents() {
 }
 
 void Screen::close() {
-    delete [] this->pixelBuffer;
+    delete [] this->pixelBuffer1;
+    delete [] this->pixelBuffer2;
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyTexture(this->texture);
     SDL_DestroyWindow(this->window);
@@ -63,14 +65,15 @@ void Screen::close() {
 }
 
 void Screen::update() {
-    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer, SCREEN_WIDTH*sizeof(Uint32));
+    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, SCREEN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(this->renderer);
     SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
     SDL_RenderPresent(this->renderer);
 }
 
 void Screen::clear() {
-    memset(this->pixelBuffer, this->COLOR_DEFAULT, this->MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer1, this->COLOR_DEFAULT, this->MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer2, this->COLOR_DEFAULT, this->MEMSIZE_PIXELBUFFER);
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
@@ -88,8 +91,63 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     color <<= 8;
     color += 0xFF; // alpha value as opaque
 
-    this->pixelBuffer[(y * this->SCREEN_WIDTH) + x] = color;
+    this->pixelBuffer1[(y * this->SCREEN_WIDTH) + x] = color;
 }
+
+void Screen::boxBlur() {
+    Uint32* tmp = this->pixelBuffer1;
+    this->pixelBuffer1 = this->pixelBuffer2;
+    this->pixelBuffer2 = tmp;
+
+    Uint32 color, redTotal, greenTotal, blueTotal;
+    Uint8 red, green, blue;
+    int currentX, currentY;
+
+    // Cycle through every pixel
+    for(int y=0; y < this->SCREEN_HEIGHT; y++) {
+        for (int x=0; x < this->SCREEN_WIDTH; x++) {
+
+            redTotal = greenTotal = blueTotal = 0;
+            red = green = blue = 0;
+            currentX = currentY = 0;
+
+            // cycle through current location and immediate surrounding
+            for (int row=-1; row<=1; row++) {
+                for (int col=-1; col<=1; col++) {
+                    currentX = x + col;
+                    currentY = y + row;
+
+                    // validate index
+                    if (currentX >= 0 && currentX < this->SCREEN_WIDTH &&
+                        currentY >= 0 && currentY < this->SCREEN_HEIGHT) {
+                        
+                        // get pixel color
+                        color = this->pixelBuffer2[currentY*this->SCREEN_WIDTH + currentX];
+                    
+                        // get individual colors
+                        red = color >> 24;
+                        green = color >> 16;
+                        blue = color >> 8;
+                    
+                        redTotal += red;
+                        greenTotal += green;
+                        blueTotal += blue;
+                    }
+                }
+            }
+
+            // get color averages
+            red = redTotal/9;
+            green = redTotal/9;
+            blue = redTotal/9;
+
+            // set the "blurred" color!
+            this->setPixel(x, y, red, green, blue);
+        }
+    }
+
+}
+
 
 
 } // namespace EighteenTwelve
