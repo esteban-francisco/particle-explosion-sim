@@ -1,4 +1,5 @@
 #include "Screen.h"
+#include "Config.h"
 
 namespace EighteenTwelve {
 
@@ -13,13 +14,14 @@ bool Screen::init() {
     this->window = SDL_CreateWindow(
         "Particle Fire Explosion Simulator", 
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
     this->renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     this->texture = SDL_CreateTexture(
-        renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, SCREEN_WIDTH, SCREEN_HEIGHT);
+        renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, 
+        Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT);
 
     if (this->window == NULL) {
         SDL_Quit();
@@ -39,8 +41,8 @@ bool Screen::init() {
         return false;
     }
 
-    this->pixelBuffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
-    this->pixelBuffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+    this->pixelBuffer1 = new Uint32[Config::SCREEN_AREA];
+    this->pixelBuffer2 = new Uint32[Config::SCREEN_AREA];
     this->clear();
 
     return true;
@@ -65,22 +67,22 @@ void Screen::close() {
 }
 
 void Screen::update() {
-    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, SCREEN_WIDTH*sizeof(Uint32));
+    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, Config::SCREEN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(this->renderer);
     SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
     SDL_RenderPresent(this->renderer);
 }
 
 void Screen::clear() {
-    memset(this->pixelBuffer1, this->COLOR_DEFAULT, this->MEMSIZE_PIXELBUFFER);
-    memset(this->pixelBuffer2, this->COLOR_DEFAULT, this->MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer1, Config::COLOR_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer2, Config::COLOR_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
-    if (x < 0 || x >= this->SCREEN_WIDTH || y < 0 || y >= this->SCREEN_HEIGHT)
+    if (x < 0 || x >= Config::SCREEN_WIDTH || y < 0 || y >= Config::SCREEN_HEIGHT)
         return;
 
-    Uint32 color = this->COLOR_DEFAULT;
+    Uint32 color = Config::COLOR_DEFAULT;
 
     color <<= 8;
     color += red;
@@ -91,7 +93,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     color <<= 8;
     color += 0xFF; // alpha value as opaque
 
-    this->pixelBuffer1[(y * this->SCREEN_WIDTH) + x] = color;
+    this->pixelBuffer1[(y * Config::SCREEN_WIDTH) + x] = color;
 }
 
 void Screen::boxBlur() {
@@ -104,12 +106,14 @@ void Screen::boxBlur() {
     int currentX, currentY;
 
     // Cycle through every pixel
-    for(int y=0; y < this->SCREEN_HEIGHT; y++) {
-        for (int x=0; x < this->SCREEN_WIDTH; x++) {
+    for(int y=0; y < Config::SCREEN_HEIGHT; y++) {
+        for (int x=0; x < Config::SCREEN_WIDTH; x++) {
 
+			//  0 0 0
+			//  0 1 0
+			//  0 0 0
+            
             redTotal = greenTotal = blueTotal = 0;
-            red = green = blue = 0;
-            currentX = currentY = 0;
 
             // cycle through current location and immediate surrounding
             for (int row=-1; row<=1; row++) {
@@ -118,11 +122,11 @@ void Screen::boxBlur() {
                     currentY = y + row;
 
                     // validate index
-                    if (currentX >= 0 && currentX < this->SCREEN_WIDTH &&
-                        currentY >= 0 && currentY < this->SCREEN_HEIGHT) {
+                    if (currentX >= 0 && currentX < Config::SCREEN_WIDTH &&
+                        currentY >= 0 && currentY < Config::SCREEN_HEIGHT) {
                         
                         // get pixel color
-                        color = this->pixelBuffer2[currentY*this->SCREEN_WIDTH + currentX];
+                        color = this->pixelBuffer2[currentY * Config::SCREEN_WIDTH + currentX];
                     
                         // get individual colors
                         red = color >> 24;

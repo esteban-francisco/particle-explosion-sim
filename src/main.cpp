@@ -1,12 +1,9 @@
-
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <math.h>
+#include "Config.h"
 #include "Screen.h"
 #include "Swarm.h"
-
-//#include <stdlib.h>     /* srand, rand */
-//#include <time.h>       /* time */
 
 using namespace std;
 using namespace EighteenTwelve;
@@ -20,26 +17,23 @@ int main(int argc, char const *argv[]) {
     Swarm swarm;
 
     while(true) {
-        // Update particles
-
-        // Draw particles
+        // Update and Draw particles
         Uint32 elapsedTime = SDL_GetTicks();
 
-        //screen.clear();
         swarm.update(elapsedTime);
         
-        Uint8 red = (1 + sin(elapsedTime*0.0001)) * 128;
-        Uint8 green = (1 + sin(elapsedTime*0.0002)) * 128;
-        Uint8 blue = (1 + sin(elapsedTime*0.0003)) * 128;
+        Uint8 red = (Uint8) (1 + sin(elapsedTime*0.00001)) * 128;
+        Uint8 green = (Uint8) (1 + sin(elapsedTime*0.00002)) * 128;
+        Uint8 blue = (Uint8) (1 + sin(elapsedTime*0.00003)) * 128;
 
         const Particle *const particles = swarm.getParticles();
-        for (int i = 0; i < swarm.NUM_PARTICLES; i++) {
+        
+        for (int i = 0; i < Config::NUM_PARTICLES; i++) {
             Particle particle = particles[i];
             
-            int x = (particle.getX() + 1) * screen.SCREEN_WIDTH/2;
-            int y = (particle.getY() * screen.SCREEN_WIDTH/2) + screen.SCREEN_HEIGHT/2;
-        
-            screen.setPixel(x, y,red, green, blue);
+            screen.setPixel((particle.getX() + 1) * Config::SCREEN_WIDTH/2, 
+                            (particle.getY() * Config::SCREEN_WIDTH/2) + Config::SCREEN_HEIGHT/2,
+                            red, green, blue);
         }
 
         // Draw the screen

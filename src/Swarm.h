@@ -6,8 +6,6 @@
 namespace EighteenTwelve {
 
 class Swarm {
-public:
-    const static int NUM_PARTICLES = 5000;
 
 private:
     Particle* particles;

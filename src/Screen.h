@@ -6,12 +6,6 @@
 namespace EighteenTwelve {
 
 class Screen {
-public:
-    const static int SCREEN_WIDTH = 800;
-    const static int SCREEN_HEIGHT = 600;
-    const static int MEMSIZE_PIXELBUFFER = SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32);
-    const static int COLOR_DEFAULT = 0x00;
-
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;
