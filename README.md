@@ -5,6 +5,8 @@ A C++ application making use of SDL2 to create a particle explosion effect.
 ## Screenshots
 <img src="https://raw.githubusercontent.com/esteban-francisco/particle-fire-sim/master/assets/001.png" width="250"> <img src="https://raw.githubusercontent.com/esteban-francisco/particle-fire-sim/master/assets/002.png" width="250"> <img src="https://raw.githubusercontent.com/esteban-francisco/particle-fire-sim/master/assets/003.png" width="250">
 
+* Click here to see a [**video screen capture (1MB)**](https://github.com/esteban-francisco/particle-explosion-sim/blob/master/assets/particle-explosion-sim.mp4?raw=true) 
+
 ## Prerequisites
 * [SDL version 2.0.12 (stable)](https://www.libsdl.org/download-2.0.php)
 
