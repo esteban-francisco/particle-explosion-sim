@@ -15,17 +15,15 @@ int main(int argc, char const *argv[]) {
     if (!screen.init()) cout << "Error initializing SDL." << endl;
 
     Swarm swarm;
+    Uint8 red, green, blue;
 
     while(true) {
         // Update and Draw particles
         Uint32 elapsedTime = SDL_GetTicks();
 
         swarm.update(elapsedTime);
+        swarm.getColor(red, green, blue);
         
-        Uint8 red = (1 + sin(elapsedTime*0.0002)) * 128;
-        Uint8 green = (1 + sin(elapsedTime*0.0001)) * 128;
-        Uint8 blue = (1 + sin(elapsedTime*0.0003)) * 128;
-
         const Particle *const particles = swarm.getParticles();
         
         for (int i = 0; i < Config::NUM_PARTICLES; i++) {

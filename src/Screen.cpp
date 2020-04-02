@@ -12,7 +12,7 @@ bool Screen::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
 
     this->window = SDL_CreateWindow(
-        "Particle Fire Explosion Simulator", 
+        Config::APPLICATION_NAME(), 
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
         Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
@@ -74,15 +74,15 @@ void Screen::update() {
 }
 
 void Screen::clear() {
-    memset(this->pixelBuffer1, Config::COLOR_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
-    memset(this->pixelBuffer2, Config::COLOR_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer1, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer2, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
 }
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     if (x < 0 || x >= Config::SCREEN_WIDTH || y < 0 || y >= Config::SCREEN_HEIGHT)
         return;
 
-    Uint32 color = Config::COLOR_DEFAULT;
+    Uint32 color = Config::CLR_BG_DEFAULT;
 
     color <<= 8;
     color += red;
