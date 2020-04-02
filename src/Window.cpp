@@ -1,14 +1,14 @@
-#include "Screen.h"
+#include "Window.h"
 #include "Config.h"
 
 namespace EighteenTwelve {
 
-Screen::Screen(): 
+Window::Window(): 
     window(NULL), renderer(NULL), texture(NULL), pixelBuffer1(NULL), pixelBuffer2(NULL) {}
 
-Screen::~Screen() {}
+Window::~Window() {}
 
-bool Screen::init() {
+bool Window::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
 
     this->window = SDL_CreateWindow(
@@ -48,7 +48,7 @@ bool Screen::init() {
     return true;
 }
 
-bool Screen::processEvents() {
+bool Window::processEvents() {
     SDL_Event event;
 
     while(SDL_PollEvent(&event))
@@ -57,7 +57,7 @@ bool Screen::processEvents() {
     return true;
 }
 
-void Screen::close() {
+void Window::close() {
     delete [] this->pixelBuffer1;
     delete [] this->pixelBuffer2;
     SDL_DestroyRenderer(this->renderer);
@@ -66,19 +66,19 @@ void Screen::close() {
     SDL_Quit();
 }
 
-void Screen::update() {
+void Window::update() {
     SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, Config::SCREEN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(this->renderer);
     SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
     SDL_RenderPresent(this->renderer);
 }
 
-void Screen::clear() {
+void Window::clear() {
     memset(this->pixelBuffer1, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
     memset(this->pixelBuffer2, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
 }
 
-void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
+void Window::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     if (x < 0 || x >= Config::SCREEN_WIDTH || y < 0 || y >= Config::SCREEN_HEIGHT)
         return;
 
@@ -96,7 +96,7 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     this->pixelBuffer1[(y * Config::SCREEN_WIDTH) + x] = color;
 }
 
-void Screen::boxBlur() {
+void Window::boxBlur() {
     Uint32* tmp = this->pixelBuffer1;
     this->pixelBuffer1 = this->pixelBuffer2;
     this->pixelBuffer2 = tmp;

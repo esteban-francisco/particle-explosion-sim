@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 #include "Config.h"
-#include "Screen.h"
+#include "Window.h"
 #include "Swarm.h"
 
 using namespace std;
@@ -11,7 +11,7 @@ using namespace EighteenTwelve;
 int main(int argc, char const *argv[]) {
     srand(time(NULL)); // random seed
 
-    Screen screen;
+    Window screen;
     if (!screen.init()) cout << "Error initializing SDL." << endl;
 
     Swarm swarm;

@@ -5,7 +5,7 @@
 
 namespace EighteenTwelve {
 
-class Screen {
+class Window {
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -14,8 +14,8 @@ private:
     Uint32 *pixelBuffer2;
 
 public:
-    Screen();
-    ~Screen();
+    Window();
+    ~Window();
     bool init();
     void update();
     void clear();
