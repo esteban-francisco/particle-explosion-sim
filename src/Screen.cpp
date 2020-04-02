@@ -129,9 +129,9 @@ void Screen::boxBlur() {
                         color = this->pixelBuffer2[currentY * Config::SCREEN_WIDTH + currentX];
                     
                         // get individual colors
-                        red = color >> 24;
-                        green = color >> 16;
-                        blue = color >> 8;
+						red = color >> 24;
+						green = color >> 16;
+						blue = color >> 8;
                     
                         redTotal += red;
                         greenTotal += green;
@@ -142,8 +142,8 @@ void Screen::boxBlur() {
 
             // get color averages
             red = redTotal/9;
-            green = redTotal/9;
-            blue = redTotal/9;
+            green = greenTotal/9;
+            blue = blueTotal/9;
 
             // set the "blurred" color!
             this->setPixel(x, y, red, green, blue);

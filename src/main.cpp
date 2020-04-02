@@ -22,9 +22,9 @@ int main(int argc, char const *argv[]) {
 
         swarm.update(elapsedTime);
         
-        Uint8 red = (1 + sin(elapsedTime*0.00001)) * 128;
-        Uint8 green = (1 + sin(elapsedTime*0.00002)) * 128;
-        Uint8 blue = (1 + sin(elapsedTime*0.00003)) * 128;
+        Uint8 red = (1 + sin(elapsedTime*0.0002)) * 128;
+        Uint8 green = (1 + sin(elapsedTime*0.0001)) * 128;
+        Uint8 blue = (1 + sin(elapsedTime*0.0003)) * 128;
 
         const Particle *const particles = swarm.getParticles();
         
