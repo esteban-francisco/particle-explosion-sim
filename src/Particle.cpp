@@ -1,6 +1,4 @@
-#include <math.h>
 #include "Particle.h"
-#include "Config.h"
 
 namespace EighteenTwelve {
 

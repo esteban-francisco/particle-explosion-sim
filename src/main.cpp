@@ -1,6 +1,4 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <math.h>
 #include "Config.h"
 #include "Window.h"
 #include "Swarm.h"

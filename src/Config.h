@@ -1,7 +1,8 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#include "Particle.h"
+// multimedia and hardware compent lib
+#include <SDL2/SDL.h>
 
 namespace EighteenTwelve {
 
@@ -21,7 +22,7 @@ public:
 
 
     // Particle Management
-    const static int NUM_PARTICLES = 5000;
+    const static int NUM_PARTICLES = 2500;
     const static int CLR_PARTICLE_SEED = 0xC70039FF; // red, planned for future version
 
     const static double SPEED_MULTIPLIER() { return 0.02; }

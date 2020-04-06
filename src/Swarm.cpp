@@ -1,5 +1,4 @@
 #include "Swarm.h"
-#include "Config.h"
 
 namespace EighteenTwelve {
 

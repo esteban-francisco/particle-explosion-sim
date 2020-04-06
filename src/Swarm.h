@@ -1,6 +1,7 @@
 #ifndef SWARM_H_
 #define SWARM_H_
 
+#include "Config.h"
 #include "Particle.h"
 
 namespace EighteenTwelve {
