@@ -2,6 +2,7 @@
 #define SCREEN_H_
 
 #include <SDL2/SDL.h>
+#include "config.h"
 
 namespace eighteentwelve {
 

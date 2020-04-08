@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Config.h"
+#include "config.h"
 #include "Window.h"
 #include "Swarm.h"
 

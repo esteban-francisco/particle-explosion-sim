@@ -1,7 +1,7 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
-#include "Config.h"
+#include "config.h"
 
 namespace eighteentwelve {
 

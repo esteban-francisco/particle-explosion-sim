@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "Config.h"
 
 namespace eighteentwelve {
 
