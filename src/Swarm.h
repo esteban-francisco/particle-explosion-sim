@@ -4,7 +4,7 @@
 #include "Config.h"
 #include "Particle.h"
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 class Swarm {
 

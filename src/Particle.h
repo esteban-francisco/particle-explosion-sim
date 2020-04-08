@@ -3,7 +3,7 @@
 
 #include "Config.h"
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 class Particle {
 private:

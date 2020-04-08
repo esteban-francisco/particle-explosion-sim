@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 Particle::Particle(): x(0), y(0) {
     this->init();
@@ -13,7 +13,7 @@ void Particle::init() {
     this->y = 0;
 
     this->direction = (2 * M_PI * rand())/RAND_MAX;
-    this->speed = (Config::SPEED_MULTIPLIER() * rand())/RAND_MAX;
+    this->speed = (config::SPEED_MULTIPLIER * rand())/RAND_MAX;
     
     // exaggerate distance between particles
     this->speed *= this->speed; 
@@ -22,7 +22,7 @@ void Particle::init() {
 void Particle::update(int intervalTime) {
 
     // add a curl to the particle paths
-    this->direction += intervalTime * Config::CURL_MULTIPLIER();
+    this->direction += intervalTime * config::CURL_MULTIPLIER;
 
     double xSpeed = this->speed * cos(this->direction);
     double ySpeed = this->speed * sin(this->direction);

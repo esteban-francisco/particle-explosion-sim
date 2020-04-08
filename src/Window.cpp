@@ -1,7 +1,7 @@
 #include "Window.h"
 #include "Config.h"
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 Window::Window(): 
     window(NULL), renderer(NULL), texture(NULL), pixelBuffer1(NULL), pixelBuffer2(NULL) {}
@@ -12,16 +12,16 @@ bool Window::init() {
     if(SDL_Init(SDL_INIT_VIDEO) < 0) return false;
 
     this->window = SDL_CreateWindow(
-        Config::APPLICATION_NAME(), 
+        config::APPLICATION_NAME, 
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-        Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        config::SCREEN_WIDTH, config::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
     this->renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     this->texture = SDL_CreateTexture(
         renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, 
-        Config::SCREEN_WIDTH, Config::SCREEN_HEIGHT);
+        config::SCREEN_WIDTH, config::SCREEN_HEIGHT);
 
     if (this->window == NULL) {
         SDL_Quit();
@@ -41,8 +41,8 @@ bool Window::init() {
         return false;
     }
 
-    this->pixelBuffer1 = new Uint32[Config::SCREEN_AREA];
-    this->pixelBuffer2 = new Uint32[Config::SCREEN_AREA];
+    this->pixelBuffer1 = new Uint32[config::SCREEN_AREA];
+    this->pixelBuffer2 = new Uint32[config::SCREEN_AREA];
     this->clear();
 
     return true;
@@ -67,22 +67,22 @@ void Window::close() {
 }
 
 void Window::update() {
-    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, Config::SCREEN_WIDTH*sizeof(Uint32));
+    SDL_UpdateTexture(this->texture, NULL, this->pixelBuffer1, config::SCREEN_WIDTH*sizeof(Uint32));
     SDL_RenderClear(this->renderer);
     SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
     SDL_RenderPresent(this->renderer);
 }
 
 void Window::clear() {
-    memset(this->pixelBuffer1, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
-    memset(this->pixelBuffer2, Config::CLR_BG_DEFAULT, Config::MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer1, config::CLR_BG_DEFAULT, config::MEMSIZE_PIXELBUFFER);
+    memset(this->pixelBuffer2, config::CLR_BG_DEFAULT, config::MEMSIZE_PIXELBUFFER);
 }
 
 void Window::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
-    if (x < 0 || x >= Config::SCREEN_WIDTH || y < 0 || y >= Config::SCREEN_HEIGHT)
+    if (x < 0 || x >= config::SCREEN_WIDTH || y < 0 || y >= config::SCREEN_HEIGHT)
         return;
 
-    Uint32 color = Config::CLR_BG_DEFAULT;
+    Uint32 color = config::CLR_BG_DEFAULT;
 
     color <<= 8;
     color += red;
@@ -93,7 +93,7 @@ void Window::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
     color <<= 8;
     color += 0xFF; // alpha value as opaque
 
-    this->pixelBuffer1[(y * Config::SCREEN_WIDTH) + x] = color;
+    this->pixelBuffer1[(y * config::SCREEN_WIDTH) + x] = color;
 }
 
 void Window::boxBlur() {
@@ -106,8 +106,8 @@ void Window::boxBlur() {
     int currentX, currentY;
 
     // Cycle through every pixel
-    for(int y=0; y < Config::SCREEN_HEIGHT; y++) {
-        for (int x=0; x < Config::SCREEN_WIDTH; x++) {
+    for(int y=0; y < config::SCREEN_HEIGHT; y++) {
+        for (int x=0; x < config::SCREEN_WIDTH; x++) {
 
 			//  0 0 0
 			//  0 1 0
@@ -122,11 +122,11 @@ void Window::boxBlur() {
                     currentY = y + row;
 
                     // validate index
-                    if (currentX >= 0 && currentX < Config::SCREEN_WIDTH &&
-                        currentY >= 0 && currentY < Config::SCREEN_HEIGHT) {
+                    if (currentX >= 0 && currentX < config::SCREEN_WIDTH &&
+                        currentY >= 0 && currentY < config::SCREEN_HEIGHT) {
                         
                         // get pixel color
-                        color = this->pixelBuffer2[currentY * Config::SCREEN_WIDTH + currentX];
+                        color = this->pixelBuffer2[currentY * config::SCREEN_WIDTH + currentX];
                     
                         // get individual colors
 						red = color >> 24;

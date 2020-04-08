@@ -1,10 +1,6 @@
 {
 	"folders": [
 		{
-			"name": "70",
-			"path": "/mnt/share/Downloads/tmp/Animating Particles/70"
-		},
-		{
 			"name": "particle-explosion-sim",
 			"path": "."
 		}

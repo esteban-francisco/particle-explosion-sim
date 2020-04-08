@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 class Window {
 private:

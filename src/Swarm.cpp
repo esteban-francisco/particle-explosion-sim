@@ -1,9 +1,9 @@
 #include "Swarm.h"
 
-namespace EighteenTwelve {
+namespace eighteentwelve {
 
 Swarm::Swarm(): lastUpdateTime(0) {
-    this->particles = new Particle[Config::NUM_PARTICLES];
+    this->particles = new Particle[config::NUM_PARTICLES];
 }
 
 Swarm::~Swarm() {
@@ -21,7 +21,7 @@ void Swarm::update(int elapsedTime) {
     // positioning
     int intervalTime = elapsedTime - this->lastUpdateTime;
 
-    for (int i = 0; i < Config::NUM_PARTICLES; i++)
+    for (int i = 0; i < config::NUM_PARTICLES; i++)
         this->particles[i].update(intervalTime);
 
     this->lastUpdateTime = elapsedTime;

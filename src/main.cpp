@@ -4,7 +4,7 @@
 #include "Swarm.h"
 
 using namespace std;
-using namespace EighteenTwelve;
+using namespace eighteentwelve;
 
 int main(int argc, char const *argv[]) {
     srand(time(NULL)); // random seed
@@ -24,11 +24,11 @@ int main(int argc, char const *argv[]) {
         
         const Particle *const particles = swarm.getParticles();
         
-        for (int i = 0; i < Config::NUM_PARTICLES; i++) {
+        for (int i = 0; i < config::NUM_PARTICLES; i++) {
             Particle particle = particles[i];
             
-            screen.setPixel((particle.getX() + 1) * Config::SCREEN_WIDTH/2, 
-                            (particle.getY() * Config::SCREEN_WIDTH/2) + Config::SCREEN_HEIGHT/2,
+            screen.setPixel((particle.getX() + 1) * config::SCREEN_WIDTH/2, 
+                            (particle.getY() * config::SCREEN_WIDTH/2) + config::SCREEN_HEIGHT/2,
                             red, green, blue);
         }
 
